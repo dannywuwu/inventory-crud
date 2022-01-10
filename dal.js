@@ -27,38 +27,42 @@ const createItem = (itemData) => {
 };
 
 /* READ */
-// calls callback on all returned rows
-const selectAll = (callback) => {
+// returns async promise containing rows data
+const selectAll = async () => {
   const sql = `SELECT * FROM items`;
-  // ensure data consistency with serialize
-  db.serialize(() => {
-    // get all rows from db
-    db.all(sql, [], (err, rows) => {
-      if (err) {
-        throw err;
-      }
+  return new Promise((resolve, reject) => {
+    // ensure data consistency with serialize
+    db.serialize(() => {
+      // get all rows from db
+      db.all(sql, [], (err, rows) => {
+        if (err) {
+          return reject(err);
+        }
 
-      return callback(rows);
+        resolve(rows);
+      });
     });
   });
 };
 
-// retrieve row matching requested itemID
-const selectItem = (itemID, callback) => {
+// retrieve row matching requested itemID as async promise
+const selectItem = (itemID) => {
   const sql = `SELECT * FROM items WHERE item_id = ?`;
-  // get first row matching itemID from db
-  db.get(sql, [itemID], (err, row) => {
-    if (err) {
-      return console.error(err.message);
-    }
-    // if row exists, return info else return message
-    return row
-      ? callback({
-          data: row,
-        })
-      : callback({
-          data: `No data found for item ${itemID}`,
-        });
+  return new Promise((resolve, reject) => {
+    // get first row matching itemID from db
+    db.get(sql, [itemID], (err, row) => {
+      if (err) {
+        return console.error(err.message);
+      }
+      // if row exists, return info else return message
+      return row
+        ? resolve({
+            data: row,
+          })
+        : resolve({
+            data: `No data found for item ${itemID}`,
+          });
+    });
   });
 };
 
@@ -96,8 +100,9 @@ const deleteItem = (itemID) => {
 };
 
 module.exports = {
+  createItem,
   selectAll,
   selectItem,
-  createItem,
+  updateItem,
   deleteItem,
 };
