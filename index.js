@@ -26,7 +26,7 @@ app.post("/create", (req, res) => {
 });
 
 // list all items or single item from db
-app.get("/list:item?", async (req, res) => {
+app.get("/list/:item?", async (req, res) => {
   const itemID = req.params.item;
   const body = req.body;
   // body fields
@@ -34,22 +34,20 @@ app.get("/list:item?", async (req, res) => {
   // if itemID is specified, return only data for specific ID
   if (itemID) {
     const item = await selectItem(itemID);
-    console.log("item", item);
-    return {
+    return res.json({
       data: item,
-    };
+    });
   } else {
     // otherwise return json array response containing all data
     const allItems = await selectAll();
-    console.log("all items", allItems);
-    return {
+    return res.json({
       data: allItems,
-    };
+    });
   }
 });
 
 // update item
-app.update("/update", (req, res) => {
+app.put("/update", (req, res) => {
   const body = req.body;
   // body fields
 
