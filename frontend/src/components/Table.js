@@ -15,6 +15,7 @@ const Table = () => {
       setItems(data);
     });
   }, []);
+
   return (
     <div className="Table">
       <table>

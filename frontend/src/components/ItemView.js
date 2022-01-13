@@ -1,0 +1,52 @@
+import { React, useState, useEffect } from "react";
+
+const ItemView = () => {
+  const [item, setItem] = useState([]);
+
+  // fetch item from backend
+  const getItem = () => {
+    return fetch(`http://localhost:8080/list/10`).then((data) => data.json());
+  };
+
+  // run getItem
+  useEffect(() => {
+    getItem().then((res) => {
+      const { data } = res;
+      setItem(data);
+    });
+  }, []);
+
+  const renderItem = () => {
+    const { item_id, name, description, img, price, quantity } = item;
+    return (
+      <tr key={item_id}>
+        <td>{item_id}</td>
+        <td>{name}</td>
+        <td>{description}</td>
+        <td>{img}</td>
+        <td>{price}</td>
+        <td>{quantity}</td>
+      </tr>
+    );
+  };
+
+  return (
+    <div className="Table">
+      <table>
+        <thead>
+          <tr>
+            <th>ID</th>
+            <th>Name</th>
+            <th>Description</th>
+            <th>Image</th>
+            <th>Price ($)</th>
+            <th>Quantity</th>
+          </tr>
+        </thead>
+        <tbody>{renderItem()}</tbody>
+      </table>
+    </div>
+  );
+};
+
+export default ItemView;

@@ -55,13 +55,7 @@ const selectItem = (itemID) => {
         return console.error(err.message);
       }
       // if row exists, return info else return message
-      return row
-        ? resolve({
-            data: row,
-          })
-        : resolve({
-            data: `No data found for item ${itemID}`,
-          });
+      return row ? resolve(row) : resolve(`No data found for item ${itemID}`);
     });
   });
 };
