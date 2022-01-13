@@ -1,11 +1,15 @@
 import { React, useState, useEffect } from "react";
+import { useParams } from "react-router-dom";
 
 const ItemView = () => {
+  const itemID = useParams();
   const [item, setItem] = useState([]);
 
   // fetch item from backend
   const getItem = () => {
-    return fetch(`http://localhost:8080/list/10`).then((data) => data.json());
+    return fetch(`http://localhost:8080/list/${itemID.id}`).then((data) =>
+      data.json()
+    );
   };
 
   // run getItem
