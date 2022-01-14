@@ -9,7 +9,7 @@ let db = new sqlite3.Database("./items.db", (err) => {
 /* CREATE */
 // create item in db from params
 const createItem = (itemData) => {
-  const { name, desc, img, price, quantity } = itemData;
+  const { name, description, img, price, quantity } = itemData;
   // parameters for sql
   const params = ["name", "description", "img", "price", "quantity"];
   // placeholders are set as (?, ?, ..., ?)
@@ -19,9 +19,9 @@ const createItem = (itemData) => {
   )}) VALUES (${placeholders})`;
 
   // run sql insert
-  db.run(sql, [name, desc, img, price, quantity], (err) => {
+  db.run(sql, [name, description, img, price, quantity], (err) => {
     if (err) {
-      return console.log(err.message);
+      throw `Error in item creation ${err}`;
     }
   });
 };

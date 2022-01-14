@@ -26,10 +26,26 @@ app.get("/", (req, res) => {
 
 // create new item
 app.post("/create", (req, res) => {
+  console.log(req.body);
   // body fields
   const { name, description, img, price, quantity } = req.body;
   // upload image to azure and return the url to store
   // insert body fields with img url into DB
+  try {
+    createItem({
+      name,
+      description,
+      img,
+      price,
+      quantity,
+    });
+  } catch (err) {
+    // ERROR
+    res.status(500);
+    res.render("error", { error: err });
+    return;
+  }
+  // OK
   res.sendStatus(200);
 });
 
