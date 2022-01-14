@@ -3,7 +3,12 @@ const app = express();
 const port = 8080;
 
 const cors = require("cors");
+var bodyParser = require("body-parser");
+
+// allow cors
 app.use(cors());
+// parse application/json
+app.use(bodyParser.json());
 
 // helpers
 const {
@@ -21,11 +26,11 @@ app.get("/", (req, res) => {
 
 // create new item
 app.post("/create", (req, res) => {
-  const body = req.body;
   // body fields
-
+  const { name, description, img, price, quantity } = req.body;
   // upload image to azure and return the url to store
   // insert body fields with img url into DB
+  res.sendStatus(200);
 });
 
 // list all items or single item from db
