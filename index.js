@@ -52,9 +52,6 @@ app.post("/create", (req, res) => {
 // list all items or single item from db
 app.get("/list/:item?", async (req, res) => {
   const itemID = req.params.item;
-  const body = req.body;
-  // body fields
-
   // if itemID is specified, return only data for specific ID
   if (itemID) {
     const item = await selectItem(itemID);
@@ -83,6 +80,22 @@ app.put("/update", (req, res) => {
       price,
       quantity,
     });
+  } catch (err) {
+    // ERROR
+    res.status(500);
+    res.render("error", { error: err });
+    return;
+  }
+  // OK
+  res.sendStatus(200);
+});
+
+// update item
+app.delete("/delete", (req, res) => {
+  // item ID to delete
+  const { itemID } = req.body;
+  try {
+    deleteItem(itemID);
   } catch (err) {
     // ERROR
     res.status(500);

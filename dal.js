@@ -21,7 +21,7 @@ const createItem = (itemData) => {
   // run sql insert
   db.run(sql, [name, description, img, price, quantity], (err) => {
     if (err) {
-      throw `Error in item creation ${err}`;
+      throw `Error in item creation ${err.message}`;
     }
   });
 };
@@ -52,7 +52,7 @@ const selectItem = (itemID) => {
     // get first row matching itemID from db
     db.get(sql, [itemID], (err, row) => {
       if (err) {
-        return console.error(err.message);
+        return reject(err);
       }
       // if row exists, return info else return message
       return row ? resolve(row) : resolve(`No data found for item ${itemID}`);
@@ -75,7 +75,7 @@ const updateItem = (itemID, itemData) => {
   // run sql update
   db.run(sql, [name, description, price, quantity, itemID], (err) => {
     if (err) {
-      return console.log(err.message);
+      throw `Error updating item ${itemID}, ${err.message}`;
     }
   });
 };
@@ -87,9 +87,8 @@ const deleteItem = (itemID) => {
   db.run(`DELETE FROM items WHERE item_id=?`, itemID, (err) => {
     // does nothing if itemID does not exist
     if (err) {
-      return console.error(err.message);
+      throw `Error deleting item ${itemID}, ${err.message}`;
     }
-    selectAll(console.log);
   });
 };
 
