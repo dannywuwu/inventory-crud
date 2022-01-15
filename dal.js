@@ -65,15 +65,15 @@ const selectItem = (itemID) => {
 const updateItem = (itemID, itemData) => {
   const { name, description, img, price, quantity } = itemData;
   // parameters for sql
-  const params = ["name", "description", "img", "price", "quantity"];
+  const params = ["name", "description", "price", "quantity"];
   const updateCols = params.map((param) => `${param} = ?`).join(",\n");
   // sql statement
   const sql = `UPDATE items
   SET ${updateCols}
   WHERE item_id = ?`;
 
-  // run sql insert
-  db.run(sql, [name, description, img, price, quantity, itemID], (err) => {
+  // run sql update
+  db.run(sql, [name, description, price, quantity, itemID], (err) => {
     if (err) {
       return console.log(err.message);
     }

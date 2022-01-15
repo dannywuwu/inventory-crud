@@ -72,11 +72,25 @@ app.get("/list/:item?", async (req, res) => {
 
 // update item
 app.put("/update", (req, res) => {
-  const body = req.body;
   // body fields
-
-  // upload image to azure and return the url to store
+  const { itemID, name, description, price, quantity } = req.body;
+  // update img handled in another function
   // insert body fields with img url into DB
+  try {
+    updateItem(itemID, {
+      name,
+      description,
+      price,
+      quantity,
+    });
+  } catch (err) {
+    // ERROR
+    res.status(500);
+    res.render("error", { error: err });
+    return;
+  }
+  // OK
+  res.sendStatus(200);
 });
 
 app.listen(port, () => {

@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "nodemon --inspect index.js -r .env"
+    "start": "nodemon --inspect index.js --ignore ./frontend/ -r .env"
   },
   "author": "Danny Wu",
   "license": "ISC",
