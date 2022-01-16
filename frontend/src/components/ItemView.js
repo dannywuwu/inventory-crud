@@ -3,12 +3,12 @@ import { useParams } from "react-router-dom";
 import ImageUpload from "./ImageUpload";
 
 const ItemView = () => {
-  const itemID = useParams();
+  const { id } = useParams();
   const [item, setItem] = useState([]);
 
   // fetch item from backend
   const getItem = () => {
-    return fetch(`http://localhost:8080/list/${itemID.id}`).then((data) =>
+    return fetch(`http://localhost:8080/list/${id}`).then((data) =>
       data.json()
     );
   };
@@ -28,7 +28,7 @@ const ItemView = () => {
         <td>{item_id}</td>
         <td>{name}</td>
         <td>{description}</td>
-        <img src={img} alt={`${name} image thumbnail`} />
+        <img src={img} alt={`${name} thumbnail`} />
         <td>{price}</td>
         <td>{quantity}</td>
       </tr>
@@ -50,7 +50,7 @@ const ItemView = () => {
         </thead>
         <tbody>{renderItem()}</tbody>
       </table>
-      <ImageUpload itemID={item.item_id} />
+      <ImageUpload itemID={id} />
     </div>
   );
 };

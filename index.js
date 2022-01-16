@@ -39,39 +39,50 @@ app.get("/", (req, res) => {
 });
 
 // create new item
-app.post("/create", upload.single("image"), (req, res) => {
-  console.log(req.body);
-  console.log("file", req.file);
+app.post("/create", upload.single("image"), async (req, res) => {
+  const image = req.file;
   // body fields
-  const { name, description, image, price, quantity } = req.body;
-  // upload image to azure and return the url to store
+  const { name, description, price, quantity } = req.body;
+  let imgURL = "";
+  if (image) {
+    // upload image to azure and return the url to store
+    imgURL = await uploadFileToBlob(image);
+  }
   // insert body fields with img url into DB
   try {
     createItem({
       name,
       description,
-      image,
+      img: imgURL,
       price,
       quantity,
     });
   } catch (err) {
     // ERROR
-    res.status(500);
-    res.render("error", { error: err });
-    return;
+    return res.status(500).send("error " + err);
   }
   // OK
   res.sendStatus(200);
 });
 
 // upload image to azure
-app.post("/upload-image", upload.single("image"), (req, res) => {
+app.post("/update-image/:item", upload.single("image"), async (req, res) => {
+  const itemID = req.params.item;
   const image = req.file;
+  if (!image) {
+    return res.send("Empty image uploaded");
+  }
   // upload to azure
-  uploadFileToBlob(image);
+  const imgURL = await uploadFileToBlob(image);
+  // update item image in db
+  try {
+    updateItem(itemID, { img: imgURL });
+  } catch (err) {
+    // ERROR
+    return res.status(500).send("error " + err);
+  }
   // OK
-  res.status(200);
-  res.send("Successfully Updated Image");
+  res.status(200).send("Successfully Updated Image");
 });
 
 // list all items or single item from db
@@ -95,21 +106,19 @@ app.get("/list/:item?", async (req, res) => {
 // update item
 app.put("/update", (req, res) => {
   // body fields
-  const { itemID, name, description, price, quantity } = req.body;
-  // update img handled in another function
+  const { itemID, name, description, image, price, quantity } = req.body;
   // insert body fields with img url into DB
   try {
     updateItem(itemID, {
       name,
       description,
+      image,
       price,
       quantity,
     });
   } catch (err) {
     // ERROR
-    res.status(500);
-    res.render("error", { error: err });
-    return;
+    return res.status(500).send("error " + err);
   }
   // OK
   res.sendStatus(200);
@@ -123,9 +132,7 @@ app.delete("/delete", (req, res) => {
     deleteItem(itemID);
   } catch (err) {
     // ERROR
-    res.status(500);
-    res.render("error", { error: err });
-    return;
+    return res.status(500).send("error " + err);
   }
   // OK
   res.sendStatus(200);

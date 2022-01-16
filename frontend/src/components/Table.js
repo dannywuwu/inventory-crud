@@ -40,7 +40,9 @@ const Table = () => {
                   <Link to={`/item/${item_id}`}>{name}</Link>
                 </td>
                 <td>{description}</td>
-                <td>{img}</td>
+                <td>
+                  <img src={img} alt={`${name} thumbnail`} />
+                </td>
                 <td>{price}</td>
                 <td>{quantity}</td>
               </tr>

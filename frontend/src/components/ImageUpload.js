@@ -3,7 +3,7 @@ import { React } from "react";
 const ImageUpload = ({ itemID }) => {
   return (
     <form
-      action="http://localhost:8080/upload-image"
+      action={`http://localhost:8080/update-image/${itemID}`}
       encType="multipart/form-data"
       method="post"
     >

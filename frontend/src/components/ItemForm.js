@@ -5,9 +5,16 @@ const ItemForm = () => {
   const [description, setDescription] = useState("");
   const [price, setPrice] = useState("");
   const [quantity, setQuantity] = useState("");
+  const [image, setImage] = useState(null);
 
   const handleInput = (e, setter) => {
+    console.log("val", e.target.value);
     setter(e.target.value);
+  };
+
+  const handleFileInput = (event) => {
+    // capture file into state
+    setImage(event.target.files[0]);
   };
 
   const handleSubmit = (e) => {
@@ -17,16 +24,18 @@ const ItemForm = () => {
       const body = {
         name,
         description,
+        image,
         price,
         quantity,
       };
+      const formData = new FormData();
+
+      for (const field in body) {
+        formData.append(field, body[field]);
+      }
       fetch("http://localhost:8080/create", {
         method: "POST",
-        headers: {
-          Accept: "application/json",
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(body),
+        body: formData,
       }).then(() => {
         // refresh item list on finish
         window.location.reload();
@@ -70,6 +79,10 @@ const ItemForm = () => {
           value={quantity}
           onChange={(e) => handleInput(e, setQuantity)}
         />
+      </label>
+      <label>
+        Upload Image:
+        <input type="file" name="image" onChange={(e) => handleFileInput(e)} />
       </label>
       <input type="submit" value="Submit" />
     </form>

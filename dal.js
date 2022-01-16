@@ -65,7 +65,7 @@ const selectItem = (itemID) => {
 const updateItem = (itemID, itemData) => {
   const { name, description, img, price, quantity } = itemData;
   // parameters for sql
-  const params = ["name", "description", "price", "quantity"];
+  const params = ["name", "description", "img", "price", "quantity"];
   const updateCols = params.map((param) => `${param} = ?`).join(",\n");
   // sql statement
   const sql = `UPDATE items
@@ -73,7 +73,7 @@ const updateItem = (itemID, itemData) => {
   WHERE item_id = ?`;
 
   // run sql update
-  db.run(sql, [name, description, price, quantity, itemID], (err) => {
+  db.run(sql, [name, description, img, price, quantity, itemID], (err) => {
     if (err) {
       throw `Error updating item ${itemID}, ${err.message}`;
     }
