@@ -28,7 +28,7 @@ const ItemView = () => {
         <td>{item_id}</td>
         <td>{name}</td>
         <td>{description}</td>
-        <td>{img}</td>
+        <img src={img} alt={`${name} image thumbnail`} />
         <td>{price}</td>
         <td>{quantity}</td>
       </tr>

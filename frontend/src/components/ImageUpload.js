@@ -9,15 +9,6 @@ const ImageUpload = ({ itemID }) => {
     >
       <div className="form-group">
         <label>
-          Item ID:
-          <input
-            type="text"
-            name="itemID"
-            value={itemID ? itemID : ""}
-            readOnly
-          />
-        </label>
-        <label>
           Upload Image:
           <input type="file" name="image" />
         </label>

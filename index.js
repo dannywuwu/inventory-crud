@@ -1,14 +1,26 @@
+const dotenv = require("dotenv");
+dotenv.config();
+
 const express = require("express");
 const app = express();
 const port = 8080;
 
 const cors = require("cors");
-var bodyParser = require("body-parser");
+const bodyParser = require("body-parser");
+const multer = require("multer");
 
 // allow cors
 app.use(cors());
 // parse application/json
 app.use(bodyParser.json());
+// parse url encoded info as well
+app.use(
+  bodyParser.urlencoded({
+    extended: false,
+  })
+);
+// upload files
+const upload = multer();
 
 // helpers
 const {
@@ -19,23 +31,26 @@ const {
   deleteItem,
 } = require("./dal.js");
 
+const { uploadFileToBlob } = require("./azurehelpers.js");
+
 // home
 app.get("/", (req, res) => {
   res.send("Hello World!");
 });
 
 // create new item
-app.post("/create", (req, res) => {
+app.post("/create", upload.single("image"), (req, res) => {
   console.log(req.body);
+  console.log("file", req.file);
   // body fields
-  const { name, description, img, price, quantity } = req.body;
+  const { name, description, image, price, quantity } = req.body;
   // upload image to azure and return the url to store
   // insert body fields with img url into DB
   try {
     createItem({
       name,
       description,
-      img,
+      image,
       price,
       quantity,
     });
@@ -47,6 +62,16 @@ app.post("/create", (req, res) => {
   }
   // OK
   res.sendStatus(200);
+});
+
+// upload image to azure
+app.post("/upload-image", upload.single("image"), (req, res) => {
+  const image = req.file;
+  // upload to azure
+  uploadFileToBlob(image);
+  // OK
+  res.status(200);
+  res.send("Successfully Updated Image");
 });
 
 // list all items or single item from db
