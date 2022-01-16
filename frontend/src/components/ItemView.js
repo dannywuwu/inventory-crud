@@ -1,5 +1,6 @@
 import { React, useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
+import ImageUpload from "./ImageUpload";
 
 const ItemView = () => {
   const itemID = useParams();
@@ -49,6 +50,7 @@ const ItemView = () => {
         </thead>
         <tbody>{renderItem()}</tbody>
       </table>
+      <ImageUpload itemID={item.item_id} />
     </div>
   );
 };
