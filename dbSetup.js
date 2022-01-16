@@ -23,7 +23,7 @@ const create = `
 // insert dummy item
 const insert = `
     INSERT INTO items (name, description, img, price, quantity)
-    VALUES ('Hand Soap', 'Keeps hands clean', 'img.png', '$2', 5)
+    VALUES ('Hand Soap', 'Keeps hands clean', 'https://upload.wikimedia.org/wikipedia/commons/thumb/7/74/Soap_in_blue_dish.JPG/1200px-Soap_in_blue_dish.JPG', '$2', 5)
 `;
 
 // select dummy val

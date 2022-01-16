@@ -6,6 +6,7 @@ const Home = () => {
   return (
     <div>
       <Table />
+      <h3>Create new item</h3>
       <ItemForm />
     </div>
   );

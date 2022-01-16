@@ -9,10 +9,10 @@ const ImageUpload = ({ itemID }) => {
     >
       <div className="form-group">
         <label>
-          Upload Image:
+          Update Image:
           <input type="file" name="image" />
         </label>
-        <input type="submit" value="Upload Image" />
+        <input type="submit" value="Update Image" />
       </div>
     </form>
   );
