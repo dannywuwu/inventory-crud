@@ -1,6 +1,6 @@
 import { React, useState } from "react";
 
-const ItemForm = ({ getItems }) => {
+const ItemForm = () => {
   const [name, setName] = useState("");
   const [description, setDescription] = useState("");
   const [price, setPrice] = useState("");
@@ -12,10 +12,14 @@ const ItemForm = ({ getItems }) => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    // POST to backend
     try {
-      const body = { name, description, price, quantity };
-      console.log("body", body);
+      // POST to backend
+      const body = {
+        name,
+        description,
+        price,
+        quantity,
+      };
       fetch("http://localhost:8080/create", {
         method: "POST",
         headers: {
