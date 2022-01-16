@@ -1,5 +1,6 @@
 // https://github.com/Azure-Samples/js-e2e-browser-file-upload-storage-blob/blob/main/src/azure-storage-blob.ts
 const { BlobServiceClient } = require("@azure/storage-blob");
+const { v4: uuidv4 } = require("uuid");
 
 const containerName = `crud-storage`;
 const sasToken = process.env.STORAGESASTOKEN;
@@ -19,23 +20,25 @@ const uploadFileToBlob = async (file) => {
   });
 
   // upload file
-  await createBlobInContainer(containerClient, file);
+  const url = await createBlobInContainer(containerClient, file);
+  return url;
 };
 
 // helper for uploadFileToBlob
 const createBlobInContainer = async (containerClient, file) => {
   // create blobClient for container, setting upload name to originalname prop of file
-  const blobClient = containerClient.getBlockBlobClient(file.originalname);
+  const blobClient = containerClient.getBlockBlobClient(
+    `${file.originalname}-${uuidv4()}`
+  );
 
   // set mimetype as determined from browser with file upload control
   const options = { blobHTTPHeaders: { blobContentType: file.mimetype } };
 
   // upload file
-  const res = await blobClient.uploadData(file, options);
+  await blobClient.uploadData(file, options);
 
-  console.log(blobClient);
-  console.log(blobClient.url);
-  console.log("res", res);
+  // return uploaded blob url
+  return blobClient.url.split("?")[0];
 };
 
 module.exports = {
