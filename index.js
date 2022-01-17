@@ -19,6 +19,8 @@ app.use(
     extended: false,
   })
 );
+// serve static react files
+app.use(express.static(process.cwd() + "/frontend/build/"));
 // upload files
 const upload = multer();
 
@@ -36,7 +38,7 @@ const { uploadFileToBlob } = require("./azurehelpers.js");
 
 // home
 app.get("/", (req, res) => {
-  res.send("Hello World!");
+  res.sendFile(process.cwd() + "/frontend/build/index.html");
 });
 
 // create new item
