@@ -8,7 +8,6 @@ const ItemForm = () => {
   const [image, setImage] = useState(null);
 
   const handleInput = (e, setter) => {
-    console.log("val", e.target.value);
     setter(e.target.value);
   };
 

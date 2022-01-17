@@ -21,7 +21,8 @@ const createItem = (itemData) => {
   // run sql insert
   db.run(sql, [name, description, img, price, quantity], (err) => {
     if (err) {
-      throw `Error in item creation ${err.message}`;
+      console.log(`Error creating item ${itemID}, ${err.message}`);
+      throw `Error in createItem for ${itemID} within sql insert`;
     }
   });
 };
@@ -63,19 +64,35 @@ const selectItem = (itemID) => {
 /* UPDATE */
 // update db item data - decoupled from img insert
 const updateItem = (itemID, itemData) => {
-  const { name, description, img, price, quantity } = itemData;
-  // parameters for sql
-  const params = ["name", "description", "img", "price", "quantity"];
+  const { name, description, price, quantity } = itemData;
+  params = ["name", "description", "price", "quantity"];
   const updateCols = params.map((param) => `${param} = ?`).join(",\n");
   // sql statement
   const sql = `UPDATE items
   SET ${updateCols}
+    WHERE item_id = ?`;
+
+  // run sql update
+  db.run(sql, [name, description, price, quantity, itemID], (err) => {
+    if (err) {
+      console.log(`Error updating item ${itemID}, ${err.message}`);
+      throw `Error in updateItem for ${itemID} within sql update`;
+    }
+  });
+};
+
+// update db item img
+const updateImage = (itemID, imgURL) => {
+  // sql statement
+  const sql = `UPDATE items
+  SET img = ?
   WHERE item_id = ?`;
 
   // run sql update
-  db.run(sql, [name, description, img, price, quantity, itemID], (err) => {
+  db.run(sql, [imgURL, itemID], (err) => {
     if (err) {
-      throw `Error updating item ${itemID}, ${err.message}`;
+      console.log(`Error updating item ${itemID}, ${err.message}`);
+      throw `Error in updateImage for ${itemID} within sql update`;
     }
   });
 };
@@ -87,7 +104,8 @@ const deleteItem = (itemID) => {
   db.run(`DELETE FROM items WHERE item_id=?`, itemID, (err) => {
     // does nothing if itemID does not exist
     if (err) {
-      throw `Error deleting item ${itemID}, ${err.message}`;
+      console.log(`Error deleting item ${itemID}, ${err.message}`);
+      throw `Error in deleteItem for ${itemID} within sql delete`;
     }
   });
 };
@@ -97,5 +115,6 @@ module.exports = {
   selectAll,
   selectItem,
   updateItem,
+  updateImage,
   deleteItem,
 };

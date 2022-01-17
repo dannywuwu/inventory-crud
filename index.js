@@ -28,6 +28,7 @@ const {
   selectAll,
   selectItem,
   updateItem,
+  updateImage,
   deleteItem,
 } = require("./dal.js");
 
@@ -65,7 +66,6 @@ app.post("/create", upload.single("image"), async (req, res) => {
   res.sendStatus(200);
 });
 
-// upload image to azure
 app.post("/update-image/:item", upload.single("image"), async (req, res) => {
   const itemID = req.params.item;
   const image = req.file;
@@ -76,7 +76,7 @@ app.post("/update-image/:item", upload.single("image"), async (req, res) => {
   const imgURL = await uploadFileToBlob(image);
   // update item image in db
   try {
-    updateItem(itemID, { img: imgURL });
+    updateImage(itemID, imgURL);
   } catch (err) {
     // ERROR
     return res.status(500).send("error " + err);
@@ -106,13 +106,13 @@ app.get("/list/:item?", async (req, res) => {
 // update item
 app.put("/update", (req, res) => {
   // body fields
-  const { itemID, name, description, image, price, quantity } = req.body;
+  console.log("body", req.body);
+  const { itemID, name, description, price, quantity } = req.body;
   // insert body fields with img url into DB
   try {
     updateItem(itemID, {
       name,
       description,
-      image,
       price,
       quantity,
     });
@@ -122,6 +122,26 @@ app.put("/update", (req, res) => {
   }
   // OK
   res.sendStatus(200);
+});
+
+// update image on azure
+app.post("/update-image/:item", upload.single("image"), async (req, res) => {
+  const itemID = req.params.item;
+  const image = req.file;
+  if (!image) {
+    return res.send("Empty image uploaded, try again");
+  }
+  // upload to azure
+  const imgURL = await uploadFileToBlob(image);
+  // update item image in db
+  try {
+    updateImage(itemID, imgURL);
+  } catch (err) {
+    // ERROR
+    return res.status(500).send("error " + err);
+  }
+  // OK
+  res.status(200).send("Successfully Updated Image");
 });
 
 // update item
