@@ -1,6 +1,6 @@
 # Hosting
 
-The app is hosted on https://crud-image-upload.azurewebsites.net/ if you would like to test out its functionality.
+The app is hosted on [] if you would like to test out its functionality.
 
 ### Create Item
 
