@@ -6,7 +6,7 @@
   "scripts": {
     "start": "node index.js",
     "dev": "nodemon --inspect index.js --ignore ./frontend/ -r .env",
-    "build": "cd frontend && npm install && npm run build"
+    "build": "cd frontend && npm install react-scripts && CI=false npm run build"
   },
   "author": "Danny Wu",
   "license": "ISC",
