@@ -1,19 +1,21 @@
 import { React, useState, useEffect } from "react";
 import { Link } from "react-router-dom";
+import ENV from "../../config";
+const API_HOST = ENV.api_host;
 
 const Table = () => {
   const [items, setItems] = useState([]);
 
   // fetch items from backend
   const getItems = () => {
-    return fetch("http://localhost:8080/list").then((data) => data.json());
+    return fetch(`${API_HOST}/list`).then((data) => data.json());
   };
 
   const handleDelete = (itemID) => {
     const body = {
       itemID,
     };
-    fetch("http://localhost:8080/delete", {
+    fetch(`${API_HOST}/delete`, {
       method: "DELETE",
       headers: {
         Accept: "application/json",

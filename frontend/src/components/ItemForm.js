@@ -1,4 +1,6 @@
 import { React, useState } from "react";
+import ENV from "../../config";
+const API_HOST = ENV.api_host;
 
 const ItemForm = () => {
   const [name, setName] = useState("");
@@ -32,7 +34,7 @@ const ItemForm = () => {
       for (const field in body) {
         formData.append(field, body[field]);
       }
-      fetch("http://localhost:8080/create", {
+      fetch(`${API_HOST}/create`, {
         method: "POST",
         body: formData,
       }).then(() => {

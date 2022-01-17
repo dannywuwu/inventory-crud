@@ -1,6 +1,8 @@
 import { React, useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import ImageUpload from "./ImageUpload";
+import ENV from "../../config";
+const API_HOST = ENV.api_host;
 
 const ItemView = () => {
   const { id } = useParams();
@@ -25,7 +27,7 @@ const ItemView = () => {
         price: price ? price : null,
         quantity: quantity ? quantity : null,
       };
-      fetch("http://localhost:8080/update", {
+      fetch(`${API_HOST}/update`, {
         method: "PUT",
         headers: {
           Accept: "application/json",
@@ -43,9 +45,7 @@ const ItemView = () => {
 
   // fetch item from backend
   const getItem = () => {
-    return fetch(`http://localhost:8080/list/${id}`).then((data) =>
-      data.json()
-    );
+    return fetch(`${API_HOST}/list/${id}`).then((data) => data.json());
   };
 
   // run getItem

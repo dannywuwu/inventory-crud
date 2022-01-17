@@ -1,9 +1,11 @@
 import { React } from "react";
+import ENV from "../../config";
+const API_HOST = ENV.api_host;
 
 const ImageUpload = ({ itemID }) => {
   return (
     <form
-      action={`http://localhost:8080/update-image/${itemID}`}
+      action={`${API_HOST}/update-image/${itemID}`}
       encType="multipart/form-data"
       method="post"
     >
