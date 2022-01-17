@@ -5,12 +5,12 @@ const express = require("express");
 const app = express();
 const port = 8080;
 
-const cors = require("cors");
+// const cors = require("cors");
 const bodyParser = require("body-parser");
 const multer = require("multer");
 
 // allow cors
-app.use(cors());
+// app.use(cors());
 // parse application/json
 app.use(bodyParser.json());
 // parse url encoded info as well
