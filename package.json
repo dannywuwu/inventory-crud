@@ -21,9 +21,7 @@
     "uuid": "^8.3.2"
   },
   "devDependencies": {
+    "mini-css-extract-plugin": "2.4.5",
     "nodemon": "^2.0.15"
-  },
-  "overrides": {
-    "mini-css-extract-plugin": "2.4.5"
   }
 }
