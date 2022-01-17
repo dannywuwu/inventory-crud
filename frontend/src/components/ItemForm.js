@@ -39,7 +39,7 @@ const ItemForm = () => {
         body: formData,
       }).then(() => {
         // refresh item list on finish
-        window.location.reload();
+        window.location.replace(`${API_HOSt}`);
       });
     } catch (e) {
       console.log("Failed to submit", e);

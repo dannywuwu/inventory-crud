@@ -29,6 +29,15 @@ The app is hosted on https://inventory-crud-s22.herokuapp.com/ if you would like
 - `cd frontend` to go into the frontend directory and `npm i react-scripts`
 - now run `npm run build`
 
-3. Run
+3. Environment variables
 
-- `cd ../` to go back into the backend directory, and `npm run start`
+- `cd ../` to go back into the backend directory
+- create a `.env` file with the value
+
+```
+NODE_ENV="development"
+```
+
+4. Run
+
+- `npm start`

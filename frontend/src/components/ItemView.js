@@ -36,7 +36,7 @@ const ItemView = () => {
         body: JSON.stringify(body),
       }).then(() => {
         // refresh item list on finish
-        window.location.reload();
+        window.location.replace(`${API_HOST}`);
       });
     } catch (e) {
       console.log("Failed to submit", e);
