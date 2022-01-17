@@ -1,7 +1,7 @@
 import { React, useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import ImageUpload from "./ImageUpload";
-import ENV from "../../config";
+import ENV from "../config";
 const API_HOST = ENV.api_host;
 
 const ItemView = () => {

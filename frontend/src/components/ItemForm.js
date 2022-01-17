@@ -1,5 +1,5 @@
 import { React, useState } from "react";
-import ENV from "../../config";
+import ENV from "../config";
 const API_HOST = ENV.api_host;
 
 const ItemForm = () => {
