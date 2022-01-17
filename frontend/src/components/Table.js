@@ -9,6 +9,23 @@ const Table = () => {
     return fetch("http://localhost:8080/list").then((data) => data.json());
   };
 
+  const handleDelete = (itemID) => {
+    const body = {
+      itemID,
+    };
+    fetch("http://localhost:8080/delete", {
+      method: "DELETE",
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(body),
+    }).then(() => {
+      // refresh item list on finish
+      window.location.reload();
+    });
+  };
+
   // run getItems
   useEffect(() => {
     getItems().then((res) => {
@@ -45,6 +62,11 @@ const Table = () => {
                 </td>
                 <td>{price}</td>
                 <td>{quantity}</td>
+                <td>
+                  <button onClick={() => handleDelete(item_id)}>
+                    Delete Item
+                  </button>
+                </td>
               </tr>
             );
           })}
