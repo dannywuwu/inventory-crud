@@ -24,20 +24,18 @@ The app is hosted on https://inventory-crud-s22.herokuapp.com/ if you would like
 
 - in the home directory run `npm install`
 
-2. Build frontend
-
-- `cd frontend` to go into the frontend directory and `npm i react-scripts`
-- now run `npm run build`
-
-3. Environment variables
+2. Environment variables
 
 - `cd ../` to go back into the backend directory
-- create a `.env` file with the value
+- create a `.env` file with the values
 
 ```
+STORAGESASTOKEN=<your azure sas token>
+STORAGERESOURCENAME=<your azure resource name>
+BACKENDURL=https://inventory-crud-s22.herokuapp.com/
 NODE_ENV="development"
 ```
 
-4. Run
+3. Run
 
-- `npm start`
+- run `npm start` in the home directory
