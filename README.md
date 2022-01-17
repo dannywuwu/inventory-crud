@@ -1,6 +1,6 @@
 # Hosting
 
-The app is hosted on [] if you would like to test out its functionality.
+The app is hosted on https://inventory-crud-s22.herokuapp.com/ if you would like to test out its functionality.
 
 ### Create Item
 
