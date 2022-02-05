@@ -1,7 +1,3 @@
-# Hosting
-
-The app is hosted on https://inventory-crud-s22.herokuapp.com/ if you would like to test out its functionality.
-
 ### Create Item
 
 - fill out the form on the home page
@@ -32,7 +28,7 @@ The app is hosted on https://inventory-crud-s22.herokuapp.com/ if you would like
 ```
 STORAGESASTOKEN=<your azure sas token>
 STORAGERESOURCENAME=<your azure resource name>
-BACKENDURL=https://inventory-crud-s22.herokuapp.com/
+BACKENDURL=<hosting url>
 NODE_ENV="development"
 ```
 
